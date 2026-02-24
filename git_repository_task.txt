@@ -1,0 +1,21 @@
+Solution for extra Git-task by Paul Hinrichs IU14140227 for the course Programing with Python.
+
+1. Cloning a branch and developing on a local PC:
+
+git clone https://github.com/org/project.git
+cd project
+git checkout develop
+
+2. Staging and commiting theoretical changes:
+
+git status      # to see what changed
+git add .
+git commit -m "Add new function for XYZ"
+
+3. Pushing the commit to the remote develop branch:
+
+git push origin develop
+
+Afterwards pulling and merging can be done, if the review by the developer team was successful:
+Pull and merge need to be done in the Git hosting UI, by creating a Pull Request with
+target=develop and source=your updated develop.
