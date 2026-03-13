@@ -42,8 +42,8 @@ def main():
    table_ideal_compared = TableFunction(table_name="compared functions", data=solution_comparison)
    
    visualization_ideal_compared = TableVisualization(file_name="functions_mapped", visualization_title="Training functions mapped")
-   visualization_ideal_compared.add_functions(table_ideal_compared, {1,3,4})
-   visualization_ideal_compared.add_functions(table_train, {1,3,4})
+   visualization_ideal_compared.add_functions(table=table_ideal_compared, only_functions={1,3,4})
+   visualization_ideal_compared.add_functions(table=table_train, only_functions={1,3,4})
    visualization_ideal_compared.show()
    table_ideal_compared.save_to_sql()
 
@@ -62,12 +62,12 @@ def main():
    table_test.compare_points(table_ideal_compared)
 
    visualization_result = TableVisualization(file_name="points_mapped_1", visualization_title="Test points mapped 1")
-   visualization_result.add_functions(table_ideal_compared, {1,3,4})
-   visualization_result.add_points(table_test, {"y13", "y36", "y40"})
+   visualization_result.add_functions(table=table_ideal_compared, only_functions={1,3,4})
+   visualization_result.add_points(table=table_test, only_mapping={"y13", "y36", "y40"})
    visualization_result.show()
    visualization_result_2 = TableVisualization(file_name="points_mapped_2", visualization_title="Test points mapped 2")
-   visualization_result_2.add_functions(table_ideal_compared, {2})
-   visualization_result_2.add_points(table_test, {"y24"})
+   visualization_result_2.add_functions(table=table_ideal_compared, only_functions={2})
+   visualization_result_2.add_points(table=table_test, only_mapping={"y24"})
    visualization_result_2.show() 
    table_test.save_to_sql()
 

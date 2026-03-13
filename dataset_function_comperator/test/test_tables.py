@@ -27,7 +27,7 @@ class TestTableClass(unittest.TestCase):
         
         # This test inspects the internal DataFrame to ensure that the consturctor reads the data correctly.
         # Even though the direct access to the wrappers data is not part of the public API it is required here.
-        pd.testing.assert_frame_equal(self.tc.df, expected_df)
+        pd.testing.assert_frame_equal(self.tc._get_full_df_for_tests(), expected_df)
 
     
     def test_constructor_happy_path_dictonary(self):
@@ -40,7 +40,7 @@ class TestTableClass(unittest.TestCase):
         try:
             # This test inspects the internal DataFrame to ensure that the consturctor reads the data correctly.
             # Even though the direct access to the wrappers data is not part of the public API it is required here.
-            pd.testing.assert_frame_equal(test_table_class.df, expected_df)
+            pd.testing.assert_frame_equal(test_table_class._get_full_df_for_tests(), expected_df)
         finally:
             test_table_class.close_sql_connection()
 
@@ -127,7 +127,7 @@ class TestTableFunction(unittest.TestCase):
         y1 = pd.Series([1.0, 2.0, 3.0], dtype="float64")
         y2 = pd.Series([1.0, 4.0, 9.0], dtype="float64")
 
-        result = self.tf_1.compare_functions(y_coords_1=y1, y_coords_2=y2)
+        result = self.tf_1._compare_functions(y_coords_1=y1, y_coords_2=y2)
         self.assertAlmostEqual(result, 40.0)
 
     def test_compare_functions_non_series_first_param(self):
@@ -135,14 +135,14 @@ class TestTableFunction(unittest.TestCase):
         y2 = pd.Series([1.0, 2.0, 3.0], dtype="float64")
 
         with self.assertRaises(TypeError):
-            self.tf_1.compare_functions(y_coords_1=y1, y_coords_2=y2)
+            self.tf_1._compare_functions(y_coords_1=y1, y_coords_2=y2)
 
     def test_compare_functions_non_series_second_param(self):
         y1 = pd.Series([1.0, 2.0, 3.0], dtype="float64")
         y2 = [1.0, 2.0, 3.0]   # y2 is a List, not a pandas Series.
 
         with self.assertRaises(TypeError):
-            self.tf_1.compare_functions(y_coords_1=y1, y_coords_2=y2)
+            self.tf_1._compare_functions(y_coords_1=y1, y_coords_2=y2)
 
     def test_compare_functions_non_float_dtype_first_param(self):
         # y1 is a Series of int not float dtype.
@@ -150,7 +150,7 @@ class TestTableFunction(unittest.TestCase):
         y2 = pd.Series([1.0, 2.0, 3.0], dtype="float64")
 
         with self.assertRaises(TypeError):
-            self.tf_1.compare_functions(y_coords_1=y1, y_coords_2=y2)
+            self.tf_1._compare_functions(y_coords_1=y1, y_coords_2=y2)
 
     def test_compare_functions_non_float_dtype_second_param(self):
         y1 = pd.Series([1.0, 2.0, 3.0], dtype="float64")
@@ -158,7 +158,7 @@ class TestTableFunction(unittest.TestCase):
         y2 = pd.Series([1, 2, 3], dtype="int64") 
 
         with self.assertRaises(TypeError):
-            self.tf_1.compare_functions(y_coords_1=y1, y_coords_2=y2)
+            self.tf_1._compare_functions(y_coords_1=y1, y_coords_2=y2)
 
     def test_compare_functions_unequal_length(self):
         # y1 and y2 have different lengths, therefore the comparison is not possible.
@@ -166,7 +166,7 @@ class TestTableFunction(unittest.TestCase):
         y2 = pd.Series([1.0, 2.0], dtype="float64")
 
         with self.assertRaises(ValueError):
-            self.tf_1.compare_functions(y_coords_1=y1, y_coords_2=y2)
+            self.tf_1._compare_functions(y_coords_1=y1, y_coords_2=y2)
 
 # Tests for the method find_function_closest(function_index, table) in class TableFunction.   
     def test_find_function_closest_happy_path(self):
